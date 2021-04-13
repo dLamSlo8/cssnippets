@@ -8,8 +8,13 @@
     "start": "next start"
   },
   "dependencies": {
+    "@reach/listbox": "^0.15.0",
+    "@svgr/webpack": "^5.5.0",
+    "@tippyjs/react": "^4.2.5",
     "next": "10.1.3",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "sass": "^1.32.8",
+    "style-scoped": "^0.2.1"
   }
 }

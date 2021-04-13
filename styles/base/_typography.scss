@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+    font-family: 'Roboto Mono', sans-serif;
+    --font-base: 1rem; // 16px
+    --font-md: calc(var(--font-base) * 1.125); // 18px
+    --font-lg: calc(var(--font-base) * 1.5); // 24px
+    --font-xl: calc(var(--font-base) * 2); // 32px
+}
+

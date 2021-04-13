@@ -1,0 +1,10 @@
+{
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "@media/*": ["media/*"],
+            "@components/*": ["components/*"],
+            "@pages/*": ["pages/*"]
+        }
+    }
+}

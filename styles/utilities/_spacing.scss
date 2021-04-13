@@ -1,0 +1,20 @@
+:root {
+    --space-base: 0.25rem;
+    --space-1: calc(var(--space-base) * 1);
+    --space-2: calc(var(--space-base) * 2);
+    --space-3: calc(var(--space-base) * 3);
+    --space-4: calc(var(--space-base) * 4);
+    --space-5: calc(var(--space-base) * 5);
+    --space-6: calc(var(--space-base) * 6);
+    --space-7: calc(var(--space-base) * 7);
+    --space-8: calc(var(--space-base) * 8);
+    --space-9: calc(var(--space-base) * 9);
+}
+
+.u-mt-3 {
+    margin-top: var(--space-3) !important;
+}
+
+.u-mt-8 {
+    margin-top: var(--space-8) !important;
+}

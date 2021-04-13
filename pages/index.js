@@ -1,65 +1,85 @@
 import Head from 'next/head'
-import styles from '../styles/Home.module.css'
 
-export default function Home() {
-  return (
-    <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+import getSnippets from '../lib/snippets';
 
-      <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
+import EyeIcon from '@media/eye-icon.svg';
+import PencilIcon from '@media/pencil-icon.svg';
+import ClipboardIcon from '@media/clipboard-icon.svg';
 
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
+import SnippetSearch from '@components/pages/home/SnippetSearch';
+import SnippetList from '@components/pages/home/SnippetList';
 
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+export default function Home({ snippets }) {
+    return (
+        <div className="l-container l-main">
+            <header className="home-c-header">
+                <h1>CSSnippets</h1>
+                <div className="home-l-header-content">
+                    <section className="u-font-md">
+                        <p>
+                            Hi! I’m Derek, a frontend developer who finds a lot of inspiration from visiting sites. 
+                            This website is a catalog of cool HTML + CSS snippets that I find online and my attempted 
+                            explanations as to why they work. 
+                        </p>
+                        <p className="u-mt-3">
+                            This site will receive a steady stream of updates every week, and I’ll be keeping a changelog
+                            for anyone interested in the project’s growth! Thanks a ton for visiting my site!
+                        </p>
+                    </section>
+                    <section className="home-c-features">
+                        <header className="home-l-features__header">
+                            <h2>Features</h2>
+                            <span className="home-c-features__decorative-line"></span>
+                        </header>
+                        <article className="home-l-feature">
+                            <EyeIcon width="24" height="24" className="u-flex-none" />
+                            <div>
+                                <h3>View Snippets</h3>
+                                <p className="u-mt-3">View both the snippet and
+                                its HTML, CSS, and occasionally
+                                JS.</p>
+                            </div>
+                        </article>
+                        <article className="home-l-feature">
+                            <PencilIcon width="24" height="24" className="u-flex-none" />
+                            <div>
+                                <h3>Interactive Playground</h3>
+                                <p className="u-mt-3">
+                                    Edit the snippet to your liking, whether
+                                    it be used specifically in your own project,
+                                    or whether you just want to experiment with
+                                    different values!
+                                </p>
+                            </div>
+                        </article>
+                        <article className="home-l-feature">
+                            <ClipboardIcon width="24" height="24" className="u-flex-none" />
+                            <div>
+                                <h3>Copy + Paste</h3>
+                                <p className="u-mt-3">
+                                    When you’re ready and feel like
+                                    you understand how it works, use
+                                    the snippet in your own projects!
+                                </p>
+                            </div>
+                        </article>
+                    </section>
+                </div>
+            </header>
+            <main className="home-l-main">
+                <h2 className="u-font-xl">Snippets</h2>
+                <SnippetSearch />
+                <SnippetList snippets={snippets} />
+            </main>
         </div>
-      </main>
+    
+    )
+}
 
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
-    </div>
-  )
+export async function getStaticProps() {
+    return {
+        props: {
+            snippets: getSnippets()
+        }
+    };
 }
