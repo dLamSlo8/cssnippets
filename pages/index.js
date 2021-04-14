@@ -6,24 +6,20 @@ import EyeIcon from '@media/eye-icon.svg';
 import PencilIcon from '@media/pencil-icon.svg';
 import ClipboardIcon from '@media/clipboard-icon.svg';
 
+import AboutSection from '@components/pages/home/AboutSection';
 import SnippetSearch from '@components/pages/home/SnippetSearch';
 import SnippetList from '@components/pages/home/SnippetList';
 
-import Button from '@components/Button';
-
 // TODO Add about/motivation button + content (overlay over current text and button with white background + box-shadow and close button)
+// TODO Rename settings.json to metadata.json. Think it makes more sense
 export default function Home({ snippets }) {
+
     return (
         <div className="l-container l-main">
             <header className="home-c-header">
                 <h1>CSSnippets</h1>
                 <div className="home-l-header-content">
-                    <section>
-                        <p className="u-font-xl u-font-medium">
-                            A collection of HTML + CSS snippets of cool UI, and attempted explanations of how they're created.
-                        </p>
-                        <Button>About / Motivation</Button>
-                    </section>
+                    <AboutSection />
                     <section className="home-c-features">
                         <header className="home-l-features__header">
                             <h2>Features</h2>

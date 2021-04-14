@@ -14,7 +14,10 @@ function MyApp({ Component, pageProps }) {
     */
     useEffect(() => {
         (async () => {
-            await import('style-scoped');
+            await Promise.all([
+                import('style-scoped'),
+                import('focus-visible')
+            ]);
         })();
     }, []);
 

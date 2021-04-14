@@ -3,6 +3,7 @@
 :root {
     font-family: 'Roboto Mono', sans-serif;
     --font-base: 1rem; // 16px
+    --font-sm: calc(var(--font-base) * 0.875);
     --font-md: calc(var(--font-base) * 1.125); // 18px
     --font-lg: calc(var(--font-base) * 1.5); // 24px
     --font-xl: calc(var(--font-base) * 2); // 32px

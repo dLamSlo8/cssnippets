@@ -9,12 +9,23 @@
     --space-7: calc(var(--space-base) * 7);
     --space-8: calc(var(--space-base) * 8);
     --space-9: calc(var(--space-base) * 9);
+    --space-10: calc(var(--space-base) * 10);
 }
 
-.u-mt-3 {
-    margin-top: var(--space-3) !important;
-}
+// .u-mt-3 {
+//     margin-top: var(--space-3) !important;
+// }
 
-.u-mt-8 {
-    margin-top: var(--space-8) !important;
+// .u-mt-8 {
+//     margin-top: var(--space-8) !important;
+// }
+
+@for $i from 1 through 10 {
+    .u-mt-#{$i} {
+        margin-top: var(--space-#{$i}) !important;
+    }
+
+    .-u-mt-#{$i} {
+        margin-top: calc(-1 * var(--space-#{$i})) !important;
+    }
 }
