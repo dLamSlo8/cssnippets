@@ -1,3 +1,5 @@
 .test-me {
+    position: fixed;
+    top: -1rem;
     background-color: red;
 }

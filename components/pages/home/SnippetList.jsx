@@ -1,18 +1,12 @@
-export default function SnippetList({ snippets }) {
-    console.log(snippets);
+import SnippetCard from './SnippetCard';
 
+export default function SnippetList({ snippets }) {
     return (
-        <ul>
+        <ul className="home-l-snippet-list">
         {
-            snippets.map(({ name, html, css }) => (
-                <li key={name} dangerouslySetInnerHTML={{__html: `
-                    <div>
-                        <style scoped>
-                            ${css}
-                        </style>
-                        ${html}
-                    </div>
-                ` }}>
+            snippets.map((snippet) => (
+                <li key={snippet.name}>
+                    <SnippetCard snippet={snippet} />
                 </li>
             ))
         }
