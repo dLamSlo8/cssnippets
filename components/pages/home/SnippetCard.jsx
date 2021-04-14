@@ -1,13 +1,18 @@
 import { useState } from 'react';
 import Link from 'next/link';
+import { SwitchTransition, CSSTransition } from 'react-transition-group';
 
 import ArrowRightIcon from '@media/arrow-right-icon.svg';
 import InformationIcon from '@media/information-icon.svg';
+import ExternalLinkIcon from '@media/external-link-icon.svg';
 import CloseIcon from '@media/close-icon.svg';
 
-// TODO install classnames
-export default function SnippetCard({ snippet: { name, topicsDiscussed, html, css }}) {
-    const [showTopics, setShowTopics] = useState(false);
+// TODO add tippy to hover link and hover information icon
+// TODO figure out a way to add hover effect for both border and header!
+// TODO add reference property to settings.json for snippets, consume here
+// TODO add UserSettingsContext for user settings dealing with dark mode and prefers-reduced-motion (and high contrast?)
+export default function SnippetCard({ snippet: { name, topicsDiscussed, reference, html, css }}) {
+    const [overlayShown, setOverlayShown] = useState(null);
 
     return (
         <div className="c-snippet-card">
@@ -28,25 +33,56 @@ export default function SnippetCard({ snippet: { name, topicsDiscussed, html, cs
                 */}
                 <div style={{transform: "translate(0)"}} dangerouslySetInnerHTML={{__html: `
                     <div>
-                        <style scoped>
-                            ${css}
-                        </style>
+                        ${css ? (`
+                            <style scoped>
+                                ${css}
+                            </style>
+                        `) : ''}
                         ${html}
                     </div>
                 `}} />
-                <div className={`c-snippet-card__topics-overlay ${showTopics ? 'c-snippet-card__topics-overlay--active' : ''}`}>
-                    <h3 className="u-font-lg">Topics Discussed</h3>
-                    <ul className="l-snippet-card__topic-list">
-                    {
-                        topicsDiscussed.map((topic) => (
-                            <li className="c-snippet-card__topic">{topic}</li>
-                        ))
-                    }
-                    </ul>
+                {
+                    overlayShown && (
+                        <SwitchTransition>
+                            <CSSTransition
+                            key={overlayShown}
+                            classNames="fade"
+                            appear
+                            timeout={200}>
+                                <div className="c-snippet-card__overlay">
+                                {
+                                    overlayShown === 'topics' ? (
+                                        <>
+                                            <h3 className="u-font-lg">Topics Discussed</h3>
+                                            <ul className="l-snippet-card__topic-list">
+                                            {
+                                                topicsDiscussed.map((topic) => (
+                                                    <li key={topic} className="c-snippet-card__topic">{topic}</li>
+                                                ))
+                                            }
+                                            </ul>
+                                        </>
+                                    ) : (
+                                        <>
+                                            <h3 className="u-font-lg">Reference</h3>
+                                            <p className="u-mt-3">Helo World!</p>
+                                        </>
+                                    )
+                                }
+                                </div>
+                            </CSSTransition>
+                        </SwitchTransition>
+                    )
+                }
+                <div className="l-snippet-card__toggles">
+                    <button onClick={() => overlayShown === 'reference' ? setOverlayShown(null) : setOverlayShown('reference')}>
+                        {overlayShown === 'reference' ? <CloseIcon width="24" height="24" /> : <ExternalLinkIcon width="24" height="24" />}
+                    </button>
+                    <button onClick={() => overlayShown === 'topics' ? setOverlayShown(null) : setOverlayShown('topics')}>
+                        {overlayShown === 'topics' ? <CloseIcon width="24" height="24" /> : <InformationIcon width="24" height="24" />}
+                    </button>
                 </div>
-                <button className="c-snippet-card__topics-toggle" onClick={() => setShowTopics((showTopics) => !showTopics)}>
-                    {showTopics ? <CloseIcon width="30" height="30" /> : <InformationIcon width="30" height="30" />}
-                </button>
+
             </div>
         </div>
     )

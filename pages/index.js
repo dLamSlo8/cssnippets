@@ -9,22 +9,20 @@ import ClipboardIcon from '@media/clipboard-icon.svg';
 import SnippetSearch from '@components/pages/home/SnippetSearch';
 import SnippetList from '@components/pages/home/SnippetList';
 
+import Button from '@components/Button';
+
+// TODO Add about/motivation button + content (overlay over current text and button with white background + box-shadow and close button)
 export default function Home({ snippets }) {
     return (
         <div className="l-container l-main">
             <header className="home-c-header">
                 <h1>CSSnippets</h1>
                 <div className="home-l-header-content">
-                    <section className="u-font-md">
-                        <p>
-                            Hi! I’m Derek, a frontend developer who finds a lot of inspiration from visiting sites. 
-                            This website is a catalog of cool HTML + CSS snippets that I find online and my attempted 
-                            explanations as to why they work. 
+                    <section>
+                        <p className="u-font-xl u-font-medium">
+                            A collection of HTML + CSS snippets of cool UI, and attempted explanations of how they're created.
                         </p>
-                        <p className="u-mt-3">
-                            This site will receive a steady stream of updates every week, and I’ll be keeping a changelog
-                            for anyone interested in the project’s growth! Thanks a ton for visiting my site!
-                        </p>
+                        <Button>About / Motivation</Button>
                     </section>
                     <section className="home-c-features">
                         <header className="home-l-features__header">
