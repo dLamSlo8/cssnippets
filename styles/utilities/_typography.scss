@@ -37,3 +37,9 @@
 .u-font-bold {
     font-weight: 700 !important;
 }
+
+@include mq('xs') {
+    .xs\:u-font-lg {
+        font-size: var(--font-lg) !important;
+    }
+}

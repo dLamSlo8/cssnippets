@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Link from 'next/link';
 import { CSSTransition } from 'react-transition-group';
 
 import CloseIcon from '@media/close-icon.svg';
@@ -42,7 +43,7 @@ export default function AboutSection() {
                         </p>
                         <p>
                             I will continue to expand on this catalog of snippets as I consume more UI day-to-day. I’ll also be keeping 
-                            a changelog for anyone interested in the project’s growth. Thanks a ton for visiting the site!
+                            a <Link href="/"><a className="u-color-primary u-font-bold">changelog</a></Link> for anyone interested in the project’s growth. Thanks a ton for visiting the site!
                         </p>
                     </div>
                 </section>   

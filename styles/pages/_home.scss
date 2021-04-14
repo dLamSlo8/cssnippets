@@ -104,8 +104,13 @@
     }
 
     &-l-snippet-list {
+        --list-item-size: 280px;
+        @include mq('xs') {
+            --list-item-size: 350px;
+        }
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(var(--list-item-size), 1fr));
+
         gap: 2rem;
         margin-top: 2rem;
     }

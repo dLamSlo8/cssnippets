@@ -1,0 +1,17 @@
+.c-text-skewed-underline {
+    --bg-color: var(--color-primary-lighter);
+
+    position: relative;
+    &::before {
+        content: '';
+        position: absolute;
+        z-index: -1;
+        bottom: 0em;
+        left: 0;
+        height: 0.3em;
+        width: 100%;
+        background-color: var(--bg-color);
+        
+        transform: rotate(-2deg) skewX(-20deg);
+    }
+}

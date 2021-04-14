@@ -53,7 +53,7 @@ export default function SnippetCard({ snippet: { name, topicsDiscussed, referenc
                                 {
                                     overlayShown === 'topics' ? (
                                         <>
-                                            <h3 className="u-font-lg">Topics Discussed</h3>
+                                            <h3 className="u-font-md xs:u-font-lg">Topics Discussed</h3>
                                             <ul className="l-snippet-card__topic-list">
                                             {
                                                 topicsDiscussed.map((topic) => (

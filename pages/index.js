@@ -17,7 +17,7 @@ export default function Home({ snippets }) {
     return (
         <div className="l-container l-main">
             <header className="home-c-header">
-                <h1>CSSnippets</h1>
+                <h1 className="u-font-xxxl">CS<span className="c-text-skewed-underline">Snippets</span></h1>
                 <div className="home-l-header-content">
                     <AboutSection />
                     <section className="home-c-features">
