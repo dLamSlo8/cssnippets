@@ -52,6 +52,11 @@
         align-items: center;
     }
 
+    // &__overlay-header {
+    //     position: sticky;
+    //     top: 0;
+    // }
+
     &__overlay {
         position: absolute;
         top: 0;
@@ -79,7 +84,6 @@
 
 .l-snippet-card__topic-list {
     list-style-type: disc;
-    margin-top: 1.5rem;
     padding-left: 1rem;
     
     & > * + * {

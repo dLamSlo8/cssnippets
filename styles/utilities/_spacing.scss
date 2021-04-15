@@ -28,4 +28,15 @@
     .-u-mt-#{$i} {
         margin-top: calc(-1 * var(--space-#{$i})) !important;
     }
+
+    .l-stack-t-#{$i} {
+        & > * + * {
+            margin-top: var(--space-#{$i});
+        }
+    }
+}
+
+.u-mx-auto {
+    margin-left: auto !important;
+    margin-right: auto !important;
 }

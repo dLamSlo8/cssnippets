@@ -1,4 +1,5 @@
-.c-button {
+.c-button, .c-link-button {
+    display: block;
     padding: 0.5rem 1rem;
     border-radius: 0.5rem;
     background-color: var(--color-primary-lighter);
@@ -22,6 +23,9 @@
         outline: revert;
         outline-offset: 3px;
     }
+}
 
-
+.c-link-button {
+    text-align: center; // This allows for progressive enhancement. In the case where fit-content doesn't work and the button is full width, it'll at least be text-centered.
+    width: fit-content;
 }

@@ -9,6 +9,7 @@ import InformationIcon from '@media/information-icon.svg';
 import ExternalLinkIcon from '@media/external-link-icon.svg';
 import CloseIcon from '@media/close-icon.svg';
 
+
 // TODO add tippy to hover link and hover information icon
 // TODO figure out a way to add hover effect for both border and header!
 // TODO add reference property to settings.json for snippets, consume here
@@ -52,7 +53,7 @@ export default function SnippetCard({ snippet: { name, topicsDiscussed, referenc
                             classNames="fade"
                             appear
                             timeout={200}>
-                                <div className="c-snippet-card__overlay">
+                                <section className="c-snippet-card__overlay l-stack-t-5">
                                 {
                                     overlayShown === 'topics' ? (
                                         <>
@@ -67,18 +68,34 @@ export default function SnippetCard({ snippet: { name, topicsDiscussed, referenc
                                         </>
                                     ) : (
                                         <>
-                                            <h3 className="u-font-lg">Reference</h3>
-                                            <p className="u-mt-3">Helo World!</p>
+                                            <h3 className="c-snippet-card__overlay-header u-font-lg">Reference</h3>
+                                            {
+                                                reference && reference.link && (
+                                                    <Tippy content={reference.link} theme="primary">
+                                                        <a 
+                                                        href={reference.link} 
+                                                        className="c-link-button u-mx-auto" 
+                                                        target="_blank" 
+                                                        rel="noopener noreferrer">Go to Reference</a>
+                                                    </Tippy>
+                                                )
+                                            }
+                                            <h4>Context</h4>
+                                            {
+                                                reference && reference.context && (
+                                                    <p>{reference.context}</p>
+                                                )
+                                            }
                                         </>
                                     )
                                 }
-                                </div>
+                                </section>
                             </CSSTransition>
                         </SwitchTransition>
                     )
                 }
                 <div className="l-snippet-card__toggles">
-                    <Tippy content={overlayShown === 'reference' ? 'Close' : <p>Go to Snippet Reference <br/> {reference}</p>} theme="primary">
+                    <Tippy content={overlayShown === 'reference' ? 'Close' : 'View Snippet Reference'} theme="primary">
                         <button onClick={() => overlayShown === 'reference' ? setOverlayShown(null) : setOverlayShown('reference')}>
                             {overlayShown === 'reference' ? <CloseIcon width="24" height="24" /> : <ExternalLinkIcon width="24" height="24" />}
                         </button>
