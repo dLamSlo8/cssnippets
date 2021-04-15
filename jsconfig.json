@@ -4,7 +4,8 @@
         "paths": {
             "@media/*": ["media/*"],
             "@components/*": ["components/*"],
-            "@pages/*": ["pages/*"]
+            "@pages/*": ["pages/*"],
+            "@contexts/*": ["contexts/*"]
         }
     }
 }

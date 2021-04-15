@@ -23,3 +23,7 @@ $breakpoints: (
     }
 }
 
+// Remember to account for reduced motion. If so, set to 0 (reduced-motion-speed). 
+@mixin ts($prop, $duration, $func: ease-in-out) {
+    transition: $prop var(--reduced-motion-speed, $duration) $func;
+}

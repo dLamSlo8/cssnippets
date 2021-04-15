@@ -1,5 +1,7 @@
 import { useEffect } from 'react';
 
+import { UserSettingsContextProvider } from '@contexts/UserSettingsContext';
+
 import '../styles/main.scss';
 
 function MyApp({ Component, pageProps }) {
@@ -21,7 +23,11 @@ function MyApp({ Component, pageProps }) {
         })();
     }, []);
 
-    return <Component {...pageProps} />
+    return (
+        <UserSettingsContextProvider>
+            <Component {...pageProps} />
+        </UserSettingsContextProvider>
+    )
 }
 
 export default MyApp

@@ -1,6 +1,8 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { SwitchTransition, CSSTransition } from 'react-transition-group';
+import Tippy from '@tippyjs/react';
+import 'tippy.js/dist/tippy.css'; // optional
 
 import ArrowRightIcon from '@media/arrow-right-icon.svg';
 import InformationIcon from '@media/information-icon.svg';
@@ -17,7 +19,7 @@ export default function SnippetCard({ snippet: { name, topicsDiscussed, referenc
     return (
         <div className="c-snippet-card">
             {/* DOM order should begin with header for accessibility, but since it's visually positioned as footer, use flex column-reverse */}
-            <header> 
+            <header className="c-snippet-card__header"> 
                 <Link href="/">
                     <a className="c-snippet-card__link">
                         <h3>{name}</h3>
@@ -25,6 +27,7 @@ export default function SnippetCard({ snippet: { name, topicsDiscussed, referenc
                     </a>
                 </Link>
             </header>
+            <div className="c-snippet-card__border-overlay"></div>
             <div className="c-snippet-card__snippet">
                 {/* 
                     We specifically set transform to translate(0) (or really any value other than none) 
@@ -75,12 +78,16 @@ export default function SnippetCard({ snippet: { name, topicsDiscussed, referenc
                     )
                 }
                 <div className="l-snippet-card__toggles">
-                    <button onClick={() => overlayShown === 'reference' ? setOverlayShown(null) : setOverlayShown('reference')}>
-                        {overlayShown === 'reference' ? <CloseIcon width="24" height="24" /> : <ExternalLinkIcon width="24" height="24" />}
-                    </button>
-                    <button onClick={() => overlayShown === 'topics' ? setOverlayShown(null) : setOverlayShown('topics')}>
-                        {overlayShown === 'topics' ? <CloseIcon width="24" height="24" /> : <InformationIcon width="24" height="24" />}
-                    </button>
+                    <Tippy content={overlayShown === 'reference' ? 'Close' : <p>Go to Snippet Reference <br/> {reference}</p>} theme="primary">
+                        <button onClick={() => overlayShown === 'reference' ? setOverlayShown(null) : setOverlayShown('reference')}>
+                            {overlayShown === 'reference' ? <CloseIcon width="24" height="24" /> : <ExternalLinkIcon width="24" height="24" />}
+                        </button>
+                    </Tippy>
+                    <Tippy content={overlayShown === 'topics' ? 'Close' : 'View Discussed Topics'} theme="primary">
+                        <button onClick={() => overlayShown === 'topics' ? setOverlayShown(null) : setOverlayShown('topics')}>
+                            {overlayShown === 'topics' ? <CloseIcon width="24" height="24" /> : <InformationIcon width="24" height="24" />}
+                        </button>
+                    </Tippy>
                 </div>
 
             </div>

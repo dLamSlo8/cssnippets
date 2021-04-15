@@ -1,0 +1,21 @@
+.tippy-box[data-theme~='primary'] {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    background-color: var(--color-primary-lightest);
+    color: var(--color-primary);
+    font-weight: 700;
+}
+
+.tippy-box[data-theme~='primary'][data-placement^='top'] > .tippy-arrow::before {
+    border-top-color: var(--color-primary-lightest);
+}
+.tippy-box[data-theme~='primary'][data-placement^='bottom'] > .tippy-arrow::before {
+    border-bottom-color: var(--color-primary-lightest);
+}
+.tippy-box[data-theme~='primary'][data-placement^='left'] > .tippy-arrow::before {
+    border-left-color: var(--color-primary-lightest);
+}
+.tippy-box[data-theme~='primary'][data-placement^='right'] > .tippy-arrow::before {
+    border-right-color: var(--color-primary-lightest);
+}
