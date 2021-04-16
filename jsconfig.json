@@ -5,7 +5,8 @@
             "@media/*": ["media/*"],
             "@components/*": ["components/*"],
             "@pages/*": ["pages/*"],
-            "@contexts/*": ["contexts/*"]
+            "@contexts/*": ["contexts/*"],
+            "@lib/*": ["lib/*"]
         }
     }
 }

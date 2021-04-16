@@ -6,6 +6,7 @@
             {
                 "languages": ["html", "css"],
                 "theme": "tomorrow",
+                "plugins": ["normalize-whitespace"],
                 "css": true
             }
         ]

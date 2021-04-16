@@ -34,3 +34,12 @@
         color: var(--color-white);
     }
 }
+
+.snippet-l-main-columns {
+    display: flex;
+
+    gap: 10px;
+    & > * {
+        flex: 1;
+    }
+}
