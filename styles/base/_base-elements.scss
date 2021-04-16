@@ -24,6 +24,26 @@ p {
     margin: 0;
 }
 
+h1 {
+    font-size: var(--font-xl);
+
+    @include mq('sm') {
+        font-size: var(--font-xxxl);
+    }
+}
+
+h2 {
+    font-size: var(--font-lg);
+    
+    @include mq('sm') {
+        font-size: var(--font-xl);
+    }
+}
+
+h3 {
+    font-size: var(--font-md);
+}
+
 p {
     line-height: 1.5;
 }

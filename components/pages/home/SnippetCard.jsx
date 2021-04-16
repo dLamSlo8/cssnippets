@@ -53,12 +53,12 @@ export default function SnippetCard({ snippet: { name, topicsDiscussed, referenc
                             classNames="fade"
                             appear
                             timeout={200}>
-                                <section className="c-snippet-card__overlay l-stack-t-5">
+                                <section className="l-full-overlay l-stack-block-5 c-snippet-card__overlay">
                                 {
                                     overlayShown === 'topics' ? (
                                         <>
                                             <h3 className="u-font-md xs:u-font-lg">Topics Discussed</h3>
-                                            <ul className="l-snippet-card__topic-list">
+                                            <ul className="u-list-disc u-pl-5 l-stack-block-4">
                                             {
                                                 topicsDiscussed.map((topic) => (
                                                     <li key={topic} className="c-snippet-card__topic">{topic}</li>
@@ -68,7 +68,7 @@ export default function SnippetCard({ snippet: { name, topicsDiscussed, referenc
                                         </>
                                     ) : (
                                         <>
-                                            <h3 className="c-snippet-card__overlay-header u-font-lg">Reference</h3>
+                                            <h3 className="c-snippet-card__overlay-header u-font-md xs:u-font-lg">Reference</h3>
                                             {
                                                 reference && reference.link && (
                                                     <Tippy content={reference.link} theme="primary">

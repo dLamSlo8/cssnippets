@@ -1,25 +1,3 @@
-:root {
-    --space-base: 0.25rem;
-    --space-1: calc(var(--space-base) * 1);
-    --space-2: calc(var(--space-base) * 2);
-    --space-3: calc(var(--space-base) * 3);
-    --space-4: calc(var(--space-base) * 4);
-    --space-5: calc(var(--space-base) * 5);
-    --space-6: calc(var(--space-base) * 6);
-    --space-7: calc(var(--space-base) * 7);
-    --space-8: calc(var(--space-base) * 8);
-    --space-9: calc(var(--space-base) * 9);
-    --space-10: calc(var(--space-base) * 10);
-}
-
-// .u-mt-3 {
-//     margin-top: var(--space-3) !important;
-// }
-
-// .u-mt-8 {
-//     margin-top: var(--space-8) !important;
-// }
-
 @for $i from 1 through 10 {
     .u-mt-#{$i} {
         margin-top: var(--space-#{$i}) !important;
@@ -29,10 +7,20 @@
         margin-top: calc(-1 * var(--space-#{$i})) !important;
     }
 
-    .l-stack-t-#{$i} {
-        & > * + * {
-            margin-top: var(--space-#{$i});
-        }
+    .u-pt-#{$i} {
+        padding-top: var(--space-#{$i}) !important;
+    }
+    
+    .u-pr-#{$i} {
+        padding-right: var(--space-#{$i}) !important;
+    }
+
+    .u-pb-#{$i} {
+        padding-bottom: var(--space-#{$i}) !important;
+    }
+
+    .u-pl-#{$i} {
+        padding-left: var(--space-#{$i}) !important;
     }
 }
 

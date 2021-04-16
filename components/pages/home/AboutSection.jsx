@@ -22,8 +22,8 @@ export default function AboutSection() {
             timeout={200}
             unmountOnExit>
                 <section className="home-c-about">
-                    <header className="home-l-about__header home-c-about__header">
-                        <h2 className="u-font-bold -u-mt-2">About / Motivation</h2>
+                    <header className="home-c-about__header">
+                        <h2 className="u-font-bold u-font-lg -u-mt-2">About / Motivation</h2>
                         <button onClick={() => setIsAboutOpen(false)} className="home-l-about__close">
                             <CloseIcon width="30" height="30" />
                         </button>
