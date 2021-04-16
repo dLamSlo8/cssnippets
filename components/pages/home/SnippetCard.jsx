@@ -2,7 +2,6 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { SwitchTransition, CSSTransition } from 'react-transition-group';
 import Tippy from '@tippyjs/react';
-import 'tippy.js/dist/tippy.css'; // optional
 
 import ArrowRightIcon from '@media/arrow-right-icon.svg';
 import InformationIcon from '@media/information-icon.svg';

@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { UserSettingsContextProvider } from '@contexts/UserSettingsContext';
 
 import '../styles/main.scss';
+import 'tippy.js/dist/tippy.css'; // Tippy styles
 
 function MyApp({ Component, pageProps }) {
 

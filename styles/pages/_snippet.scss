@@ -1,0 +1,36 @@
+
+
+.snippet-c-language-button {
+    position: relative;
+    padding: 0.5rem 0.75rem;
+    border-radius: 0.5rem 0.5rem 0 0;
+
+    &:not(&--active)::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        /* 
+            Because this is a pseudo-element positioned absolute with the border, the content isn't affected by it and has
+            the size of before the border is applied, so we need to offset the pseudo-element to re-center the content.
+        */
+        margin-left: -2px;
+        border-radius: 0.5rem 0.5rem 0 0;
+
+    }
+
+    &:hover::before {
+        background-color: var(--color-gray-light);
+        border: 2px solid var(--color-black);
+        border-bottom: none;
+    }
+
+
+    &--active {
+        background-color: var(--color-black);
+        color: var(--color-white);
+    }
+}

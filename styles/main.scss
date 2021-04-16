@@ -8,12 +8,14 @@
 @import 'base/layouts';
 @import 'base/base-elements';
 @import 'base/tippy-theming';
+@import 'base/prism';
 
 @import 'components/button';
 @import 'components/snippet-card';
 @import 'components/text-effects';
 
 @import 'pages/home';
+@import 'pages/snippet';
 
 @import 'utilities/general';
 @import 'utilities/flex';
