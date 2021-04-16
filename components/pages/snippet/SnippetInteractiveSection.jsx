@@ -55,7 +55,7 @@ export default function SnippetInteractiveSection() {
             </header>
             {/* Main content (where code should go) */}
             <div>
-                <pre>
+                <pre className="snippet-l-code">
                     <code className="language-css">
                     {
                         `

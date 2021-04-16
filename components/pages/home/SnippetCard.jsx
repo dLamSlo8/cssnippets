@@ -14,14 +14,14 @@ import SnippetVisual from '@components/SnippetVisual';
 // TODO figure out a way to add hover effect for both border and header!
 // TODO add reference property to settings.json for snippets, consume here
 // TODO add UserSettingsContext for user settings dealing with dark mode and prefers-reduced-motion (and high contrast?)
-export default function SnippetCard({ snippet: { name, topicsDiscussed, reference, html, css }}) {
+export default function SnippetCard({ snippet: { slug, name, topicsDiscussed, reference, html, css }}) {
     const [overlayShown, setOverlayShown] = useState(null);
 
     return (
         <div className="c-snippet-card">
             {/* DOM order should begin with header for accessibility, but since it's visually positioned as footer, use flex column-reverse */}
             <header className="c-snippet-card__header"> 
-                <Link href="/">
+                <Link href={`/${slug}`}>
                     <a className="c-snippet-card__link">
                         <h3>{name}</h3>
                         <ArrowRightIcon width="18" height="18" />

@@ -1,4 +1,5 @@
 // import { useRouter } from 'next/router';
+import { useEffect, useRef, useState } from 'react';
 
 import { getSnippet, getSnippetNames } from '@lib/snippets';
 
@@ -6,19 +7,34 @@ import ResizableSplitColumns from '@components/ResizableSplitColumns';
 import SnippetVisual from '@components/SnippetVisual';
 import SnippetInteractiveSection from '@components/pages/snippet/SnippetInteractiveSection';
 
-export default function SnippetPage({ snippet }) {
-    
+export default function SnippetPage({ snippet: { html, css, name } }) {
+    const containerRef = useRef(null);
+    const [mounted, setMounted] = useState(false);
+
+    useEffect(() => {
+        setMounted(true);
+    }, []);
+
     return (
-        <div className="l-container">
-            <h1>{snippet.name}</h1>
-            <main className="snippet-l-main-columns">
-                <ResizableSplitColumns>
-                    <div style={{backgroundColor: 'red'}}>
-                        <SnippetVisual />
-                    </div>
-                    <SnippetInteractiveSection />
-                </ResizableSplitColumns>
+        <div className="l-container" >
+            <h1>{name}</h1>
+
+            <main className="snippet-l-main-columns" ref={containerRef}>
+            {
+                mounted && (
+                    <ResizableSplitColumns fullWidth={containerRef.current.offsetWidth} leftMinWidth={200}>
+                        <div className="snippet-l-left-column">
+                            <SnippetVisual 
+                            html={html}
+                            css={css} />
+                        </div>
+                        <SnippetInteractiveSection />
+                    </ResizableSplitColumns>
+                )
+            }
             </main>
+
+
         </div>
     )
 }

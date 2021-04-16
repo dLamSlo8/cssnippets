@@ -38,8 +38,23 @@
 .snippet-l-main-columns {
     display: flex;
 
-    gap: 10px;
-    & > * {
-        flex: 1;
+    & > *:last-child {
+        flex-grow: 1;
     }
 }
+
+.snippet-c-divider {
+    width: 20px;
+    background-color: var(--color-gray);
+}
+
+.snippet-l-code {
+    min-height: 500px;
+}
+
+.snippet-l-left-column {
+    display: flex;
+    padding: 1rem;
+}
+
+// .snippet-c-right-column
