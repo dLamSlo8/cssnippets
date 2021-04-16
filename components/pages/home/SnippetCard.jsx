@@ -9,6 +9,7 @@ import InformationIcon from '@media/information-icon.svg';
 import ExternalLinkIcon from '@media/external-link-icon.svg';
 import CloseIcon from '@media/close-icon.svg';
 
+import SnippetVisual from '@components/SnippetVisual';
 
 // TODO add tippy to hover link and hover information icon
 // TODO figure out a way to add hover effect for both border and header!
@@ -30,21 +31,7 @@ export default function SnippetCard({ snippet: { name, topicsDiscussed, referenc
             </header>
             <div className="c-snippet-card__border-overlay"></div>
             <div className="c-snippet-card__snippet">
-                {/* 
-                    We specifically set transform to translate(0) (or really any value other than none) 
-                    to handle the case where we have a fixed element. This is because when we have a transform
-                    set to a non-none value, the element becomes the containing block for the fixed element!
-                */}
-                <div style={{transform: "translate(0)"}} dangerouslySetInnerHTML={{__html: `
-                    <div>
-                        ${css ? (`
-                            <style scoped>
-                                ${css}
-                            </style>
-                        `) : ''}
-                        ${html}
-                    </div>
-                `}} />
+                <SnippetVisual html={html} css={css} />
                 {
                     overlayShown && (
                         <SwitchTransition>

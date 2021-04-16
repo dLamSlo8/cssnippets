@@ -1,0 +1,13 @@
+{
+    "presets": ["next/babel"],
+    "plugins": [
+        [
+            "prismjs",
+            {
+                "languages": ["html", "css"],
+                "theme": "tomorrow",
+                "css": true
+            }
+        ]
+    ]
+}
