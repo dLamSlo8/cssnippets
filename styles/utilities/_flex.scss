@@ -25,3 +25,9 @@
 .u-self-center {
     align-self: center !important;
 }
+
+.u-flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

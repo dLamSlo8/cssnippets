@@ -10,6 +10,7 @@ import ExpandIcon from '@media/expand-icon.svg';
 export default function SnippetInteractiveSection({ html, css }) {
     const [viewMode, setViewMode] = useState('explanation');
     const [codeMode, setCodeMode] = useState('html');
+    const [copied, setCopied] = useState(false);
 
     const htmlButtonClasses = classNames('snippet-c-language-button', {
         'snippet-c-language-button--active': codeMode === 'html'
@@ -17,6 +18,12 @@ export default function SnippetInteractiveSection({ html, css }) {
     const cssButtonClasses = classNames('snippet-c-language-button', {
         'snippet-c-language-button--active': codeMode === 'css'
     });
+
+    const handleCopy = (e) => {
+        navigator.clipboard.writeText(codeMode === 'css' ? css : html).then(function() {
+            setCopied(true);
+        })
+    };
 
     /* 
         Effect:
@@ -46,8 +53,8 @@ export default function SnippetInteractiveSection({ html, css }) {
                             <QuestionIcon width="24" height="24" />
                         </button>
                     </Tippy>
-                    <Tippy content={`Copy ${codeMode.toUpperCase()} to Clipboard`} theme="primary">
-                        <button>
+                    <Tippy content={`${copied ? 'Copied' : 'Copy'} ${codeMode.toUpperCase()} to Clipboard${copied ? '!' : ''}`} theme="primary" onHidden={(e) => setCopied(false)} hideOnClick={false}>
+                        <button onClick={handleCopy}>
                             <ClipboardIcon width="24" height="24" />
                         </button>
                     </Tippy>

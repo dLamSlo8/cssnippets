@@ -18,9 +18,9 @@ export default function SnippetPage({ snippet: { html, css, name, topicsDiscusse
     const containerRef = useRef(null);
     const [mounted, setMounted] = useState(false);
     const [referenceContextShown, setReferenceContextShown] = useState(false);
-    const isDesktop = useMediaQuery('(min-width: 450px)');
+    const isDesktop = useMediaQuery('(min-width: 750px)');
 
-    const referenceLinkClasses = classNames('u-font-lg', {
+    const referenceLinkClasses = classNames('u-font-md sm:u-font-lg', {
         'snippet-c-reference-link': isUrl
     });
 
@@ -36,13 +36,13 @@ export default function SnippetPage({ snippet: { html, css, name, topicsDiscusse
 
     return (
         <div className="l-container l-stack-block-8">
-            <header className="l-stack-block-5">
-                <div className="l-stack-inline-3">
+            <header className="l-stack-block-8">
+                <div className="l-stack-inline-3 snippet-l-top-header">
                     <div>
                         <p className="u-color-gray-dark u-font-bold">Snippet</p>
-                        <h1 className="u-font-xl">{name}</h1>
+                        <h1 className="u-font-lg sm:u-font-xl">{name}</h1>
                     </div>
-                    <section className="u-ml-auto">
+                    <section className="lg:u-ml-auto">
                         <header className="snippet-l-reference-section">
                             <div className="l-stack-inline-3 u-justify-between">
                                 <p className="u-color-gray-dark u-font-bold">Reference</p>
@@ -94,7 +94,7 @@ export default function SnippetPage({ snippet: { html, css, name, topicsDiscusse
                 {
                     mounted && isDesktop &&  (
                         <ResizableSplitColumns fullWidth={containerRef.current.offsetWidth} leftMinWidth={200}>
-                            <div className="snippet-c-left-column">
+                            <div className="snippet-c-visual">
                                 <SnippetVisual 
                                 html={html}
                                 css={css} />
@@ -104,6 +104,16 @@ export default function SnippetPage({ snippet: { html, css, name, topicsDiscusse
                     )
                 }
                 </div>
+                {
+                    !isDesktop && (
+                        <div className="l-stack-block-5">
+                            <div className="snippet-c-visual snippet-c-visual--mobile">
+                                <SnippetVisual html={html} css={css} />
+                            </div>
+                            <SnippetInteractiveSection html={html} css={css} />
+                        </div>
+                    )
+                }
                 <h2>Extra Thoughts</h2>
                 <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eum, maiores nihil sit odit sequi illum at odio atque eligendi architecto voluptatum tempore, tenetur dolores inventore veniam explicabo, voluptate veritatis accusantium?</p>
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga ea ratione assumenda quisquam maiores pariatur, ipsam velit cumque. Quos amet magnam beatae voluptas a expedita, assumenda obcaecati ratione et quisquam.</p>

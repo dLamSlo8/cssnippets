@@ -33,6 +33,12 @@
     margin-left: auto !important;
 }
 
+@include mq('lg') {
+    .lg\:u-ml-auto {
+        margin-left: auto !important;
+    }
+}
+
 .u-mr-auto {
     margin-right: auto !important;
 }
