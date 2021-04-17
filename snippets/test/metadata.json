@@ -6,6 +6,10 @@
         "Three"
     ],
     "reference": {
+        "link": {
+            "isUrl": false,
+            "title": "Microsoft Edge"
+        },
         "context": "lorem ipsum blah blah blah blah blahb lasijdaidjq eoifj qeoifjqeofij qeofi qeoifj qoeifj qoeij "
     }
 }

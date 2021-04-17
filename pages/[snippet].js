@@ -48,7 +48,7 @@ export default function SnippetPage({ snippet: { html, css, name, topicsDiscusse
                                 <p className="u-color-gray-dark u-font-bold">Reference</p>
                                 <Tippy 
                                 content={
-                                    <section className="l-stack-block-4">
+                                    <section className="snippet-c-reference-context l-stack-block-2">
                                         <header className="l-stack-inline-3 u-justify-between u-align-center">
                                             <h2 className="u-font-lg">Context</h2>
                                             <button onClick={() => setReferenceContextShown(false)}>
