@@ -7,6 +7,7 @@ import QuestionIcon from '@media/question-icon.svg';
 import ClipboardIcon from '@media/clipboard-icon.svg';
 import ExpandIcon from '@media/expand-icon.svg';
 
+// TODO Add touch events to divider (to account for touch devices like tablets and landscape-oriented phones!)
 export default function SnippetInteractiveSection({ html, css }) {
     const [viewMode, setViewMode] = useState('explanation');
     const [codeMode, setCodeMode] = useState('html');

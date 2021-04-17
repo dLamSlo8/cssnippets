@@ -44,7 +44,7 @@ export default function SnippetPage({ snippet: { html, css, name, topicsDiscusse
                     </div>
                     <section className="lg:u-ml-auto">
                         <header className="snippet-l-reference-section">
-                            <div className="l-stack-inline-3 u-justify-between">
+                            <div className="l-stack-inline-5">
                                 <p className="u-color-gray-dark u-font-bold">Reference</p>
                                 <Tippy 
                                 content={
@@ -62,7 +62,7 @@ export default function SnippetPage({ snippet: { html, css, name, topicsDiscusse
                                 onClickOutside={() => setReferenceContextShown(false)}
                                 interactive={true}>
                                     <Tippy content="Show Context" theme="primary" disabled={referenceContextShown}>
-                                        <button onClick={() => setReferenceContextShown((referenceContextShown) => !referenceContextShown)}>
+                                        <button className="lg:u-ml-auto" onClick={() => setReferenceContextShown((referenceContextShown) => !referenceContextShown)}>
                                             <InformationIcon width="24" height="24" />
                                         </button>
                                     </Tippy>
