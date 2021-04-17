@@ -32,7 +32,7 @@ export default function SnippetInteractiveSection({ html, css }) {
     }, [codeMode]);
 
     return (
-        <section>
+        <section className="snippet-l-interactive-section">
             {/* Top bar */}
             <header className="l-stack-inline-3">
                 <button className={htmlButtonClasses} onClick={() => setCodeMode('html')}>HTML</button>
@@ -60,7 +60,7 @@ export default function SnippetInteractiveSection({ html, css }) {
             </header>
             {/* Main content (where code should go) */}
             <div>
-                <pre className="snippet-l-code">
+                <pre className="snippet-l-code" tabIndex="0">
                     <code className={`language-${codeMode}`}>
                         {codeMode === 'css' ? css : html}
                     </code>
