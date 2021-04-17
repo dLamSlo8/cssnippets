@@ -37,6 +37,11 @@
 
 .snippet-l-main-columns {
     display: flex;
+    --resizable-columns-gap: 1rem;
+
+    & > * + * {
+        margin-left: var(--resizable-columns-gap);
+    }
 
     & > *:last-child {
         flex-grow: 1;
@@ -44,17 +49,25 @@
 }
 
 .snippet-c-divider {
-    width: 20px;
+    width: 5px;
+    padding: 0 0.3rem;
+
     background-color: var(--color-gray);
+    border-radius: 1rem;
+    cursor: col-resize;
 }
 
 .snippet-l-code {
     min-height: 500px;
 }
 
-.snippet-l-left-column {
+.snippet-c-left-column {
     display: flex;
-    padding: 1rem;
+
+    justify-content: center;
+    align-items: center;
+    border: 2px solid var(--color-gray);
+    border-radius: 0.5rem;
 }
 
 // .snippet-c-right-column

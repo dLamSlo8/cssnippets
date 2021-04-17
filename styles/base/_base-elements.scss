@@ -65,4 +65,8 @@ button {
     border: none;
     padding: 0;
     cursor: pointer;
+
+    &:focus:not(.focus-visible) {
+        outline: none;
+    }
 }

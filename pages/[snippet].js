@@ -16,19 +16,19 @@ export default function SnippetPage({ snippet: { html, css, name } }) {
     }, []);
 
     return (
-        <div className="l-container" >
+        <div className="l-container l-stack-block-5">
             <h1>{name}</h1>
 
             <main className="snippet-l-main-columns" ref={containerRef}>
             {
                 mounted && (
                     <ResizableSplitColumns fullWidth={containerRef.current.offsetWidth} leftMinWidth={200}>
-                        <div className="snippet-l-left-column">
+                        <div className="snippet-c-left-column">
                             <SnippetVisual 
                             html={html}
                             css={css} />
                         </div>
-                        <SnippetInteractiveSection />
+                        <SnippetInteractiveSection html={html} css={css} />
                     </ResizableSplitColumns>
                 )
             }

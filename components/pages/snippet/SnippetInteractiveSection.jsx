@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useLayoutEffect } from 'react';
 import Prism from 'prismjs';
 import classNames from 'classnames';
 import Tippy from '@tippyjs/react';
@@ -7,7 +7,7 @@ import QuestionIcon from '@media/question-icon.svg';
 import ClipboardIcon from '@media/clipboard-icon.svg';
 import ExpandIcon from '@media/expand-icon.svg';
 
-export default function SnippetInteractiveSection() {
+export default function SnippetInteractiveSection({ html, css }) {
     const [viewMode, setViewMode] = useState('explanation');
     const [codeMode, setCodeMode] = useState('html');
 
@@ -21,10 +21,15 @@ export default function SnippetInteractiveSection() {
     /* 
         Effect:
         Highlights code on mount.
+        We're specifically opting for useLayoutEffect
+        to ensure that the highlighting ships with the DOM update, rather than 
+        after the paint, so there's no flash of unstyled text!
+        If we were to use useEffect, this highlighting would be done after the layout 
+        and paint.
     */
-    useEffect(() => {
+    useLayoutEffect(() => {
         Prism.highlightAll();
-    }, []);
+    }, [codeMode]);
 
     return (
         <section>
@@ -41,7 +46,7 @@ export default function SnippetInteractiveSection() {
                             <QuestionIcon width="24" height="24" />
                         </button>
                     </Tippy>
-                    <Tippy content="Copy to Clipboard" theme="primary">
+                    <Tippy content={`Copy ${codeMode.toUpperCase()} to Clipboard`} theme="primary">
                         <button>
                             <ClipboardIcon width="24" height="24" />
                         </button>
@@ -56,17 +61,8 @@ export default function SnippetInteractiveSection() {
             {/* Main content (where code should go) */}
             <div>
                 <pre className="snippet-l-code">
-                    <code className="language-css">
-                    {
-                        `
-                        .test {
-                            position: relative;
-                        }
-                        .test-2 {
-                            position: absolute;
-                        }
-                        `
-                    }
+                    <code className={`language-${codeMode}`}>
+                        {codeMode === 'css' ? css : html}
                     </code>
                 </pre>
             </div>

@@ -18,9 +18,16 @@ export default function ResizableSplitColumns({ children, fullWidth, leftMinWidt
         // On mount, get the initial client rect!
         firstChildBoundingClientRectRef.current = firstChildRef.current.getBoundingClientRect();
 
-        window.addEventListener('resize', () => {
+        window.addEventListener('resize', handleResize);
+
+        function handleResize(e) {
             firstChildBoundingClientRectRef.current = firstChildRef.current.getBoundingClientRect();
-        })
+
+        }
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        };
     }, []);
 
     useEffect(() => {
@@ -43,7 +50,15 @@ export default function ResizableSplitColumns({ children, fullWidth, leftMinWidt
             
             document.body.style.cursor = '';
         };
+
+        return () => {
+            dividerRef.current?.removeEventListener('mousedown', handleMouseDown);
+            window.removeEventListener('mosuemove', handleMouseMove);
+            window.removeEventListener('mouseup', handleMouseUp);
+        }
+
     }, []);
+
 
 
 
@@ -53,7 +68,7 @@ export default function ResizableSplitColumns({ children, fullWidth, leftMinWidt
             React.cloneElement(childrenArray[0], {
                 ref: firstChildRef,
                 style: {
-                    width: width,
+                    width: `calc(${width}px - var(--resizable-columns-gap))`,
                     minWidth: leftMinWidth
                 }
             })

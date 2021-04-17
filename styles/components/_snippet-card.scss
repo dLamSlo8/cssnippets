@@ -12,12 +12,12 @@
         background-color 200ms ease-in-out;
 
         &:hover, &:focus:not(.focus-visible) {
-            background-color: var(--color-primary-lighter);
+            background-color: var(--color-primary-light);
             color: var(--color-primary);
         }
 
         &:hover + .c-snippet-card__border-overlay {
-            border-color: var(--color-primary-lighter);
+            border-color: var(--color-primary-light);
         }
     }
     &__border-overlay {
