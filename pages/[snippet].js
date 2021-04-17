@@ -1,5 +1,7 @@
 // import { useRouter } from 'next/router';
 import { useEffect, useRef, useState } from 'react';
+import Tippy from '@tippyjs/react';
+import classNames from 'classnames';
 
 import { getSnippet, getSnippetNames } from '@lib/snippets';
 
@@ -9,10 +11,18 @@ import ResizableSplitColumns from '@components/ResizableSplitColumns';
 import SnippetVisual from '@components/SnippetVisual';
 import SnippetInteractiveSection from '@components/pages/snippet/SnippetInteractiveSection';
 
-export default function SnippetPage({ snippet: { html, css, name, topicsDiscussed } }) {
+import InformationIcon from '@media/information-icon.svg';
+import CloseIcon from '@media/close-icon.svg';
+
+export default function SnippetPage({ snippet: { html, css, name, topicsDiscussed, reference: { link: { isUrl, title }, context } } }) {
     const containerRef = useRef(null);
     const [mounted, setMounted] = useState(false);
+    const [referenceContextShown, setReferenceContextShown] = useState(false);
     const isDesktop = useMediaQuery('(min-width: 450px)');
+
+    const referenceLinkClasses = classNames('u-font-lg', {
+        'snippet-c-reference-link': isUrl
+    });
 
     /* 
         Effect:
@@ -25,32 +35,59 @@ export default function SnippetPage({ snippet: { html, css, name, topicsDiscusse
     }, []);
 
     return (
-        <div className="l-container l-stack-block-5">
-            <header className="l-stack-inline-3 u-align-baseline">
-                <div>
-                    <p className="u-color-gray-dark u-font-bold">Snippet</p>
-                    <h1 className="u-font-xl">{name}</h1>
-                </div>
-                <div className="u-ml-auto l-stack-inline-5">
-                    <section>
+        <div className="l-container l-stack-block-8">
+            <header className="l-stack-block-5">
+                <div className="l-stack-inline-3">
+                    <div>
+                        <p className="u-color-gray-dark u-font-bold">Snippet</p>
+                        <h1 className="u-font-xl">{name}</h1>
+                    </div>
+                    <section className="u-ml-auto">
                         <header className="snippet-l-reference-section">
-                            <p className="u-color-gray-dark u-font-bold">Reference</p>
-                            <h2 className="u-font-lg">Reference Name</h2>
+                            <div className="l-stack-inline-3 u-justify-between">
+                                <p className="u-color-gray-dark u-font-bold">Reference</p>
+                                <Tippy 
+                                content={
+                                    <section className="l-stack-block-4">
+                                        <header className="l-stack-inline-3 u-justify-between u-align-center">
+                                            <h2 className="u-font-lg">Context</h2>
+                                            <button onClick={() => setReferenceContextShown(false)}>
+                                                <CloseIcon width="24" height="24" className="u-color-white" />
+                                            </button>
+                                        </header>
+                                        <p>{context}</p>
+                                    </section>
+                                } 
+                                visible={referenceContextShown} 
+                                onClickOutside={() => setReferenceContextShown(false)}
+                                interactive={true}>
+                                    <Tippy content="Show Context" theme="primary" disabled={referenceContextShown}>
+                                        <button onClick={() => setReferenceContextShown((referenceContextShown) => !referenceContextShown)}>
+                                            <InformationIcon width="24" height="24" />
+                                        </button>
+                                    </Tippy>
+                                </Tippy>
+                            </div>
+                            <h2 className={referenceLinkClasses}>
+                            {
+                                isUrl ? <a href={title} target="_blank" rel="noopener noreferrer">{title}</a> : title
+                            }
+                            </h2>
                         </header>
-                    </section>
-                    <section>
-                        <header>
-                            <p className="u-color-gray-dark u-font-bold">Topics Discussed</p>
-                        </header>
-                        <ul className="l-stack-inline-2 u-align-center snippet-l-topics">
-                        {
-                            topicsDiscussed.map((topic) => (
-                                <li className="snippet-c-topic">{topic}</li>
-                            ))
-                        }
-                        </ul>
                     </section>
                 </div>
+                <section>
+                    <header>
+                        <p className="u-color-gray-dark u-font-bold">Topics Discussed</p>
+                    </header>
+                    <ul className="snippet-l-topics">
+                    {
+                        topicsDiscussed.map((topic) => (
+                            <li className="snippet-c-topic">{topic}</li>
+                        ))
+                    }
+                    </ul>
+                </section>
             </header>
             <main className="l-stack-block-5">
                 <div className="snippet-l-main-columns" ref={containerRef}>

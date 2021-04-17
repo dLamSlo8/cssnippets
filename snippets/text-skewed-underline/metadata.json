@@ -8,6 +8,9 @@
     ],
     "reference": {
         "context": "During my remote job hunt after college, Iqef qefq qef qef qef qef qefqef qef qef qef qef qef qef qef qef  stumbled upon a new site called remotebear on Reddit, and was immediately hooked onto the text effect shown here.",
-        "link": "https://remotebear.io"
+        "link": {
+            "isUrl": true,
+            "title": "https://remotebear.io"
+        }
     }
 }
