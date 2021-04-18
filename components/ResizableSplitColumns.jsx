@@ -11,6 +11,7 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
     When we reach min width, set some ref to stuck left.
     Then, get the current client 
 */
+// TODO Change implementation of width. Now left and right will have specific widths. Maybe we'll do percentages. I think that's the way.
 export default function ResizableSplitColumns({ children, fullWidth, leftMinWidth, rightMinWidth }) {
     const childrenArray = React.Children.toArray(children);
     const dividerRef = useRef(null);

@@ -1,3 +1,15 @@
-pre[class*="language-"] {
-    margin: 0 !important;
+pre {
+    margin: 0;
+    padding: 1rem 0;
+    background-color: var(--color-black);
+    overflow-x: auto;
+}
+
+code[class*="language-"] {
+    white-space: pre !important;
+}
+
+// Overrides
+:not(pre) > code[class*="language-"] {
+    background: transparent !important;
 }

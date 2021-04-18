@@ -177,4 +177,28 @@
     min-height: 300px;
 }
 
-// .snippet-c-right-column
+.snippet-c-code-line {
+    padding: 0 1rem;
+
+    &:hover {
+        background-color: var(--color-gray-darkest);
+    }
+
+    &--button {
+        width: 100%;
+    }
+}
+
+.snippet-c-code-explanation {
+    white-space: normal;
+}
+
+.snippet-c-code-line-icon {
+    color: var(--color-prism-gray);
+    opacity: 0;
+
+    .snippet-c-code-line:hover  & {
+        opacity: 1;
+    }
+}
+

@@ -1,5 +1,6 @@
 // import { useRouter } from 'next/router';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import dynamic from 'next/dynamic';
 import Tippy from '@tippyjs/react';
 import classNames from 'classnames';
 
@@ -24,6 +25,10 @@ export default function SnippetPage({ snippet: { html, css, name, topicsDiscusse
         'snippet-c-reference-link': isUrl
     });
 
+    const pureCSS = useMemo(() => {
+        return css.reduce((acc, cssObj) => acc + `${cssObj.line}\n`, '');
+    }, []);
+    console.log(css);
     /* 
         Effect:
         Sets mounted state. Necessary to get immediate value of containerRef 
@@ -97,7 +102,7 @@ export default function SnippetPage({ snippet: { html, css, name, topicsDiscusse
                             <div className="snippet-c-visual">
                                 <SnippetVisual 
                                 html={html}
-                                css={css} />
+                                css={pureCSS} />
                             </div>
                             <SnippetInteractiveSection html={html} css={css} />
                         </ResizableSplitColumns>
@@ -108,7 +113,7 @@ export default function SnippetPage({ snippet: { html, css, name, topicsDiscusse
                     !isDesktop && (
                         <div className="l-stack-block-5">
                             <div className="snippet-c-visual snippet-c-visual--mobile">
-                                <SnippetVisual html={html} css={css} />
+                                <SnippetVisual html={html} css={pureCSS} />
                             </div>
                             <SnippetInteractiveSection html={html} css={css} />
                         </div>
@@ -128,9 +133,11 @@ export default function SnippetPage({ snippet: { html, css, name, topicsDiscusse
 }
 
 export async function getStaticProps({ params }) {
+    let snippet = await getSnippet(params.snippet);
+
     return {
         props: {
-            snippet: getSnippet(params.snippet)
+            snippet
         }
     }
 }
