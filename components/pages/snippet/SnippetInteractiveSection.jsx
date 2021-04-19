@@ -12,7 +12,7 @@ import CSSLine from './CSSLine';
 
 // TODO Fix issue with React event thing? (with  Prism and <code>)
 // TODO Add touch events to divider (to account for touch devices like tablets and landscape-oriented phones!)
-export default function SnippetInteractiveSection({ html, css }) {
+export default function SnippetInteractiveSection({ html, css, pureCSS, ...propagated }) {
     const [viewMode, setViewMode] = useState('explanation');
     const [codeMode, setCodeMode] = useState('css');
     const [copied, setCopied] = useState(false);
@@ -29,7 +29,7 @@ export default function SnippetInteractiveSection({ html, css }) {
      * Copies CSS/HTML (depending on codeMode) to clipboard.
      */
     const handleCopy = (e) => {
-        navigator.clipboard.writeText(codeMode === 'css' ? css : html).then(function() {
+        navigator.clipboard.writeText(codeMode === 'css' ? pureCSS : html).then(function() {
             setCopied(true);
         })
     };
@@ -67,7 +67,7 @@ export default function SnippetInteractiveSection({ html, css }) {
     }, []);
 
     return (
-        <section className="snippet-l-interactive-section">
+        <section {...propagated}>
             {/* Top bar */}
             <header className="l-stack-inline-3">
                 <button className={htmlButtonClasses} onClick={() => setCodeMode('html')}>HTML</button>
@@ -96,22 +96,15 @@ export default function SnippetInteractiveSection({ html, css }) {
             {/* Main content (where code should go) */}
             <div>
                 <pre className="snippet-l-code" tabIndex="0">
-                    {/* <code className={`language-${codeMode}`}>
-
-                        {codeMode === 'css' ? (
-                            css
-                        ) : html}
-
-                    </code> */}
-                    {
-                        codeMode === 'css' ? (
-                            css.map(({ line, explanation }) => (
-                                line && explanation ? (
-                                    <InteractiveCSSLine line={line} explanation={explanation} />
-                                ) : <CSSLine line={line} />
-                            ))
-                        ) : <div><code className="language-html">{html}</code></div>
-                    }
+                {
+                    codeMode === 'css' ? (
+                        css.map(({ line, explanation }) => (
+                            line && explanation ? (
+                                <InteractiveCSSLine line={line} explanation={explanation} />
+                            ) : <CSSLine line={line} />
+                        ))
+                    ) : <div><code className="language-html">{html}</code></div>
+                }
                 </pre>
             </div>
         </section>        

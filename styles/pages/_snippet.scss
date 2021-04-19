@@ -37,24 +37,21 @@
 
 .snippet-l-main-columns {
     display: flex;
-    --resizable-columns-gap: 1rem;
+    // --resizable-columns-gap: 1rem;
 
-    & > * + * {
-        margin-left: var(--resizable-columns-gap);
-    }
+    // & > * + * {
+    //     margin-left: var(--resizable-columns-gap);
+    // }
 
-    & > *:last-child {
-        flex-grow: 1;
-    }
+    // & > *:last-child {
+    //     flex-grow: 1;
+    // }
 }
 
-.snippet-l-interactive-section {
-    min-width: 300px;
-}
+
 
 .snippet-c-divider {
     position: relative;
-    width: 5px;
     padding: 0 0.3rem;
 
     background-color: var(--color-gray);
@@ -190,7 +187,15 @@
 }
 
 .snippet-c-code-explanation {
+    padding: 1rem;
+    margin: 1rem;
+
     white-space: normal;
+    background-color: var(--color-gray-light);
+    border-radius: 0.5rem;
+
+    // Handle all md elements
+    
 }
 
 .snippet-c-code-line-icon {

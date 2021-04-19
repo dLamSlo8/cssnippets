@@ -1,5 +1,5 @@
 // import { useRouter } from 'next/router';
-import { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import dynamic from 'next/dynamic';
 import Tippy from '@tippyjs/react';
 import classNames from 'classnames';
@@ -19,6 +19,7 @@ export default function SnippetPage({ snippet: { html, css, name, topicsDiscusse
     const containerRef = useRef(null);
     const [mounted, setMounted] = useState(false);
     const [referenceContextShown, setReferenceContextShown] = useState(false);
+    const [fullWidth, setFullWidth] = useState(null);
     const isDesktop = useMediaQuery('(min-width: 750px)');
 
     const referenceLinkClasses = classNames('u-font-md sm:u-font-lg', {
@@ -28,7 +29,7 @@ export default function SnippetPage({ snippet: { html, css, name, topicsDiscusse
     const pureCSS = useMemo(() => {
         return css.reduce((acc, cssObj) => acc + `${cssObj.line}\n`, '');
     }, []);
-    console.log(css);
+
     /* 
         Effect:
         Sets mounted state. Necessary to get immediate value of containerRef 
@@ -37,6 +38,21 @@ export default function SnippetPage({ snippet: { html, css, name, topicsDiscusse
     */
     useEffect(() => {
         setMounted(true);
+    }, []);
+
+    
+    useEffect(() => {
+        setFullWidth(containerRef.current.offsetWidth);
+
+        window.addEventListener('resize', handleResize);
+
+        function handleResize(e) {
+            setFullWidth(containerRef.current.offsetWidth);
+        }
+
+        return () => {
+            window.removeEventListener('resize', handleResize);
+        }
     }, []);
 
     return (
@@ -98,13 +114,17 @@ export default function SnippetPage({ snippet: { html, css, name, topicsDiscusse
                 <div className="snippet-l-main-columns" ref={containerRef}>
                 {
                     mounted && isDesktop &&  (
-                        <ResizableSplitColumns fullWidth={containerRef.current.offsetWidth} leftMinWidth={200}>
-                            <div className="snippet-c-visual">
-                                <SnippetVisual 
-                                html={html}
-                                css={pureCSS} />
-                            </div>
-                            <SnippetInteractiveSection html={html} css={css} />
+                        <ResizableSplitColumns 
+                        fullWidth={fullWidth} 
+                        dividerWidth={5}
+                        gapWidth={16}
+                        leftMinWidth={200}
+                        rightMinWidth={300}>
+                            <SnippetVisual 
+                            className="snippet-c-visual"
+                            html={html}
+                            css={pureCSS} />
+                            <SnippetInteractiveSection html={html} css={css} pureCSS={pureCSS} />
                         </ResizableSplitColumns>
                     )
                 }

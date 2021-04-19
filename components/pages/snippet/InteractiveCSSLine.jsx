@@ -23,13 +23,12 @@ export default function InteractiveCSSLine({ line, explanation }) {
                         )
                     }
                 </div>
-
             </button>
             
             <CSSTransition
             in={showExplanation}
-            classNames="fade"
-            timeout={200}
+            classNames="snippet-explanation"
+            timeout={showExplanation ? 200 : 0}
             unmountOnExit>
                 <div className="snippet-c-code-explanation" dangerouslySetInnerHTML={{__html: explanation }}></div>
             </CSSTransition>

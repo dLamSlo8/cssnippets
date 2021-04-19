@@ -11,46 +11,84 @@ import React, { useEffect, useRef, useState, useCallback } from 'react';
     When we reach min width, set some ref to stuck left.
     Then, get the current client 
 */
-// TODO Change implementation of width. Now left and right will have specific widths. Maybe we'll do percentages. I think that's the way.
-export default function ResizableSplitColumns({ children, fullWidth, leftMinWidth, rightMinWidth }) {
+// TODO Change implementation of width. Now left and right will have specific widths. Maybe we'll do percentages. I think that's the way. CONVERT TO PERCENTAGE AFTER GETTING WIDTH SO IT SCALES WHEN SCREEN SIZE CHANGES!
+export default function ResizableSplitColumns({ children, fullWidth, dividerWidth, gapWidth, leftMinWidth, rightMinWidth }) {
     const childrenArray = React.Children.toArray(children);
     const dividerRef = useRef(null);
     const firstChildRef = useRef(null);
-    const [width, setWidth] = useState(fullWidth / 2);
+    const halfWidth = (fullWidth - dividerWidth - (gapWidth * 2)) / 2;
+    const [width, setWidth] = useState(halfWidth / fullWidth * 100);
+    const [rightWidth, setRightWidth] = useState(halfWidth / fullWidth * 100);
+    const [dividerFocused, setDividerFocused] = useState(false);
     const firstChildBoundingClientRectRef = useRef(null);
-    // const prevWidthRef = useRef(null);
-    // const prevXRef = useRef(null);
-    // const directionRef = useRef(null);
-    // const stopSettingWidthRef = useRef(false);
+    const mouseDownDividerPosRef = useRef(null); // Used in calculation for % widths on handleMouseMove
 
+    /**
+     * Handles left and right arrow keys when the divider is focused.
+     * When the widths are about to hit a bound, it caps at the bound.
+     */
     const handleDividerKeydown = useCallback((e) => {
+        const minRightWidth = rightMinWidth / fullWidth * 100;
+        const minLeftWidth = leftMinWidth / fullWidth * 100;
+
         if (e.key === 'ArrowRight') {
-            setWidth((width) => width + 10);
+            if ((rightWidth - 2) < minRightWidth) { // Check for bound
+                const widthIncrease = rightWidth - minRightWidth;
+
+                setWidth((width) => width + widthIncrease);
+                setRightWidth(minRightWidth);
+            }
+            else {
+                setWidth((width) => width + 2);
+                setRightWidth((rightWidth) => rightWidth - 2);
+            }
         }
         else if (e.key === 'ArrowLeft') {
-            setWidth((width) => width - 10);
+            if ((width - 2) < minLeftWidth) { // Check for bound
+                const widthIncrease = width - minLeftWidth;
+
+                setWidth(minLeftWidth);
+                setRightWidth((rightWidth) => rightWidth + widthIncrease);
+            }
+            else {
+                setWidth((width) => width - 2);
+                setRightWidth((rightWidth) => rightWidth + 2);
+            }
         }
-    }, []);
+    }, [fullWidth, width, rightWidth]);
 
-    const handleDividerFocus = () => {
-        console.log('focused');
-        window.addEventListener('keydown', handleDividerKeydown);
-    };
+    // const handleDividerFocus = () => {
+    //     window.addEventListener('keydown', handleDividerKeydown);
+    // };
 
-    const handleDividerBlur = () => {
-        console.log('blurred');
-        window.removeEventListener('keydown', handleDividerKeydown);
-    };
+    // const handleDividerBlur = () => {
+    //     window.removeEventListener('keydown', handleDividerKeydown);
+    // };
 
+    /* 
+        Effect:
+        Handles the attachment of the keydown handler based on whether or not
+        the divider is focused. Also ensures that the handler is always updated
+        by including it in the dependency array.
+    */
     useEffect(() => {
-        
-    }, [width]);
+        if (dividerFocused) {
+            window.addEventListener('keydown', handleDividerKeydown);
+        }
+        else {
+            window.removeEventListener('keydown', handleDividerKeydown);
+        }
+
+        return () => { // Runs before each effect after the first one as 'cleanup'.
+            window.removeEventListener('keydown', handleDividerKeydown);
+        }
+    }, [dividerFocused, handleDividerKeydown]);
 
     /* 
         Effect:
         On mount, attach a resize handler to recalculate the boundingClientRect for the first child.
         This is so that we don't have to recalculate the boundingClientRect every time
-        we move the divider (we use the value to deetermine how wide the first child should be!)
+        we move the divider (we use the value to determine how wide the first child should be!)
     */
     useEffect(() => {
         // On mount, get the initial client rect!
@@ -59,7 +97,6 @@ export default function ResizableSplitColumns({ children, fullWidth, leftMinWidt
         window.addEventListener('resize', handleResize);
 
         function handleResize(e) {
-            console.log('resizing');
             // Conditional is used b/c firstChildRef disappears when we unmount this component due to mobile screen.
             // This is to catch any stray event handlers b/c of the speedy nature of resize handler!
             if (firstChildRef.current) {
@@ -73,77 +110,71 @@ export default function ResizableSplitColumns({ children, fullWidth, leftMinWidt
         };
     }, []);
 
+    /* 
+        Effect:
+        Handles the main logic for dragging the divider. Dragging is available once the divider
+        receives the mousedown event. This effect re-runs when fullWidth changes because fullWidth
+        (the width of the resize container) is used in the % width calculations for the columns,
+        so it needs to stay up-to-date.
+    */
     useEffect(() => {
         dividerRef.current.addEventListener('mousedown', handleMouseDown);
 
+        /**
+         * Handles when the divider receives mousedown event. This allows for dragging to occur.
+         */
         function handleMouseDown(e) {
             window.addEventListener('mousemove', handleMouseMove);
             window.addEventListener('mouseup', handleMouseUp);
+            
+            // This ref is important to help calculate the % widths in the mousemove handler.
+            mouseDownDividerPosRef.current = e.x - dividerRef.current.getBoundingClientRect().x;
 
             document.body.style.cursor = 'col-resize'; // Avoids flicker of col-resize cursor and pointer cursor
         }
 
+        /**
+         * Handles when the user drags across the screen once it has the divider selected.
+         * Ensures exact widths (that will act as percentage to account for responsiveness) through
+         * calculating using existing widths.
+         */
         function handleMouseMove(e) {
-            console.log(e);
-                const newWidth = e.x - firstChildBoundingClientRectRef.current.x;
+            const newWidth = e.x - mouseDownDividerPosRef.current - firstChildBoundingClientRectRef.current.x - gapWidth;
+            const newRightWidth = fullWidth - newWidth - dividerWidth - (gapWidth * 2);
 
-                // if (firstChildRef.current.offsetWidth !== prevWidthRef.current) {
-                    setWidth(newWidth);
-                // }
-    
-                // prevWidthRef.current = newWidth;
-
-
-
+            setWidth(newWidth / fullWidth * 100);
+            setRightWidth(newRightWidth / fullWidth * 100);
         }
 
+        /**
+         * Handles when mouse is released after dragging the divider.
+         * Makes sure to check to see if our width has exceed bounds, and if so,
+         * turns it back to normal.
+         */
         function handleMouseUp(e) {
             window.removeEventListener('mousemove', handleMouseMove);
+
+            // Handle exceed right width.
+            if (e.x > (fullWidth - rightMinWidth + firstChildBoundingClientRectRef.current.x)) {
+                setRightWidth(rightMinWidth / fullWidth * 100);
+                setWidth((fullWidth - rightMinWidth - dividerWidth - gapWidth * 2) / fullWidth * 100);
+            }
+            else if (e.x < (firstChildBoundingClientRectRef.current.x + leftMinWidth)) { // Handle exceed left width.
+                setWidth(leftMinWidth / fullWidth * 100);
+                setRightWidth((fullWidth - (leftMinWidth + dividerWidth + gapWidth * 2)) / fullWidth * 100);
+            }
             
             document.body.style.cursor = '';
         };
 
-        return () => {
+        return () => { // Remember to clean up the event listeners so they don't persist when the component unmounts!
             dividerRef.current?.removeEventListener('mousedown', handleMouseDown);
-            window.removeEventListener('mosuemove', handleMouseMove);
+            window.removeEventListener('mousemove', handleMouseMove);
             window.removeEventListener('mouseup', handleMouseUp);
         }
 
-    }, []);
+    }, [fullWidth]);
 
-    /* 
-        Effect:
-        On mount, attach event handlers to check whether we're focusing with tab or mouse.
-        This assumes we start with mouse, then relies on tab to switch the focus mechanism.
-        I think this works best b/c we give keyboard-only the first option, as person
-        with mouse already has the optimal experience.
-    */
-    // useEffect(() => {
-    //     window.addEventListener('keydown', handleKeyDown);
-
-    //     function handleKeyDown(e) {
-    //         if (e.key === 'Tab') {
-    //             console.log('tabbed!');
-    //             focusMechanismRef.current = 'tab';
-                
-    //             window.addEventListener('mousedown', handleMouseDown);
-    //             window.removeEventListener('keydown', handleKeyDown);
-    //         }
-    //     };
-
-    //     function handleMouseDown(e) {
-    //         console.log('clicked!');
-    //         focusMechanismRef.current = 'mouse';
-
-    //         window.addEventListener('keydown', handleKeyDown);
-    //         window.removeEventListener('mousedown', handleMouseDown);
-    //     }
-
-    //     return () => {
-    //         window.removeEventListener('mousedown', handleMouseDown);
-    //         window.removeEventListener('keydown', handleKeyDown);
-    //     }
-    // }, []);
 
     return (
         <>
@@ -151,18 +182,27 @@ export default function ResizableSplitColumns({ children, fullWidth, leftMinWidt
             React.cloneElement(childrenArray[0], {
                 ref: firstChildRef,
                 style: {
-                    width: `calc(${width}px - var(--resizable-columns-gap))`,
-                    minWidth: leftMinWidth
+                    width: `${width}%`,
+                    minWidth: leftMinWidth,
                 }
             })
         }
             <div 
             ref={dividerRef} 
             className="snippet-c-divider" 
+            style={{ width: dividerWidth, marginLeft: gapWidth}}
             tabIndex="0"
-            onFocus={handleDividerFocus}
-            onBlur={handleDividerBlur}></div>
-            {childrenArray[1]}
+            onFocus={() => setDividerFocused(true)}
+            onBlur={() => setDividerFocused(false)}></div>
+        {
+            React.cloneElement(childrenArray[1], {
+                style: {
+                    marginLeft: gapWidth,
+                    width: `${rightWidth}%`,
+                    minWidth: rightMinWidth,
+                }
+            })
+        }
         </>
     )
 }
