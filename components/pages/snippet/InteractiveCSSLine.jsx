@@ -3,6 +3,7 @@ import { CSSTransition } from 'react-transition-group';
 
 import ChevronDownIcon from '@media/chevron-down-icon.svg';
 import ChevronUpIcon from '@media/chevron-up-icon.svg';
+import InformationIcon from '@media/information-icon.svg';
 
 // TODO Add accessibility to button (look at Reach UI accordion docs for proper usage: https://reach.tech/accordion)
 export default function InteractiveCSSLine({ line, explanation }) {
@@ -15,6 +16,7 @@ export default function InteractiveCSSLine({ line, explanation }) {
                     <code className="language-css">
                         {line}
                     </code>
+                    <InformationIcon className="snippet-c-code-line-icon snippet-c-code-line-icon--persistent" width="18" height="18" />
                     {
                         showExplanation ? (
                             <ChevronUpIcon className="snippet-c-code-line-icon" width="18" height="18" />

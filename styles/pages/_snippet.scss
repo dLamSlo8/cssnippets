@@ -205,5 +205,9 @@
     .snippet-c-code-line:hover  & {
         opacity: 1;
     }
+
+    &--persistent {
+        opacity: 1;
+    }
 }
 
