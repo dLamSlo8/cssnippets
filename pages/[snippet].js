@@ -111,7 +111,7 @@ export default function SnippetPage({ snippet: { html, css, name, topicsDiscusse
                 </section>
             </header>
             <main className="l-stack-block-5">
-                <div className="snippet-l-main-columns" ref={containerRef}>
+                <div className="u-flex" ref={containerRef}>
                 {
                     mounted && isDesktop &&  (
                         <ResizableSplitColumns 

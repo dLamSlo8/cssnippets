@@ -89,6 +89,16 @@
     justify-content: space-between;
     height: 100%;
     width: fit-content;
+
+    & > * + * {
+        margin-top: 0.5rem;
+    }
+
+    @include mq('lg') {
+        & > * + * {
+            margin-top: 0;
+        }
+    }
 }
 
 .snippet-l-top-header {

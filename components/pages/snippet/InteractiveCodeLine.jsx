@@ -6,14 +6,14 @@ import ChevronUpIcon from '@media/chevron-up-icon.svg';
 import InformationIcon from '@media/information-icon.svg';
 
 // TODO Add accessibility to button (look at Reach UI accordion docs for proper usage: https://reach.tech/accordion)
-export default function InteractiveCSSLine({ line, explanation }) {
+export default function InteractiveCodeLine({ language, line, explanation }) {
     const [showExplanation, setShowExplanation] = useState(false);
 
     return (
         <>
             <button className="snippet-c-code-line snippet-c-code-line--button" onClick={() => setShowExplanation((showExplanation) => !showExplanation)}>
                 <div className="l-stack-inline-5 u-align-center">
-                    <code className="language-css">
+                    <code className={`language-${language}`}>
                         {line}
                     </code>
                     <InformationIcon className="snippet-c-code-line-icon snippet-c-code-line-icon--persistent u-flex-none" width="18" height="18" />

@@ -3,18 +3,18 @@ import Prism from 'prismjs';
 import classNames from 'classnames';
 import Tippy from '@tippyjs/react';
 
-import InteractiveCSSLine from './InteractiveCSSLine';
+import CodeLine from './CodeLine';
+import InteractiveCodeLine from './InteractiveCodeLine';
 
 import QuestionIcon from '@media/question-icon.svg';
 import ClipboardIcon from '@media/clipboard-icon.svg';
 import ExpandIcon from '@media/expand-icon.svg';
-import CSSLine from './CSSLine';
 
 // TODO Fix issue with React event thing? (with  Prism and <code>)
 // TODO Add touch events to divider (to account for touch devices like tablets and landscape-oriented phones!)
 export default function SnippetInteractiveSection({ html, css, pureCSS, ...propagated }) {
     const [viewMode, setViewMode] = useState('explanation');
-    const [codeMode, setCodeMode] = useState('css');
+    const [codeMode, setCodeMode] = useState('html');
     const [copied, setCopied] = useState(false);
     const [mounted, setMounted] = useState(false);
 
@@ -98,12 +98,12 @@ export default function SnippetInteractiveSection({ html, css, pureCSS, ...propa
                 <pre className="snippet-l-code" tabIndex="0">
                 {
                     codeMode === 'css' ? (
-                        css.map(({ line, explanation }) => (
+                        css.map(({ line, explanation }, idx) => (
                             line && explanation ? (
-                                <InteractiveCSSLine line={line} explanation={explanation} />
-                            ) : <CSSLine line={line} />
+                                <InteractiveCodeLine key={idx} language="css" line={line} explanation={explanation} />
+                            ) : <CodeLine key={idx} language="css" line={line} />
                         ))
-                    ) : <div><code className="language-html">{html}</code></div>
+                    ) : html.split('\n').map((line, idx) => <CodeLine key={idx} language="html" line={line} />)
                 }
                 </pre>
             </div>
