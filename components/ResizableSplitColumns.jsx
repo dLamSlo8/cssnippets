@@ -153,6 +153,7 @@ export default function ResizableSplitColumns({ children, fullWidth, dividerWidt
          */
         function handleMouseUp(e) {
             window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('mouseup', handleMouseUp);
 
             // Handle exceed right width.
             if (e.x > (fullWidth - rightMinWidth + firstChildBoundingClientRectRef.current.x)) {

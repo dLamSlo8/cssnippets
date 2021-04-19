@@ -16,12 +16,12 @@ export default function InteractiveCSSLine({ line, explanation }) {
                     <code className="language-css">
                         {line}
                     </code>
-                    <InformationIcon className="snippet-c-code-line-icon snippet-c-code-line-icon--persistent" width="18" height="18" />
+                    <InformationIcon className="snippet-c-code-line-icon snippet-c-code-line-icon--persistent u-flex-none" width="18" height="18" />
                     {
                         showExplanation ? (
-                            <ChevronUpIcon className="snippet-c-code-line-icon" width="18" height="18" />
+                            <ChevronUpIcon className="snippet-c-code-line-icon u-flex-none" width="18" height="18" />
                         ) : (
-                            <ChevronDownIcon className="snippet-c-code-line-icon" width="18" height="18" />
+                            <ChevronDownIcon className="snippet-c-code-line-icon u-flex-none" width="18" height="18" />
                         )
                     }
                 </div>

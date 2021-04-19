@@ -120,10 +120,11 @@ export default function SnippetPage({ snippet: { html, css, name, topicsDiscusse
                         gapWidth={16}
                         leftMinWidth={200}
                         rightMinWidth={300}>
-                            <SnippetVisual 
-                            className="snippet-c-visual"
-                            html={html}
-                            css={pureCSS} />
+                            <div className="snippet-c-visual">
+                                <SnippetVisual 
+                                html={html}
+                                css={pureCSS} />
+                            </div>
                             <SnippetInteractiveSection html={html} css={css} pureCSS={pureCSS} />
                         </ResizableSplitColumns>
                     )
